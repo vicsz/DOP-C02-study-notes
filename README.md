@@ -50,6 +50,142 @@ Focus on understanding the **core DevOps services**, such as:
 - **Amazon SQS**: Fully managed queuing service for decoupling microservices and ensuring reliable message delivery.
 - **Amazon SNS**: Pub-sub messaging service for sending notifications
 
+## Services In-Depth 
+### **AWS CodeDeploy Study Sheet**
+#### **1. Overview**
+- **AWS CodeDeploy** automates the deployment of applications to a variety of targets, including:
+  - **EC2 Instances**
+  - **On-Premises Servers**
+  - **Lambda Functions**
+  - **Amazon ECS Services**
+
+- **Deployment Models:**
+  - **In-Place Deployments:** Deploys the new application version on existing instances.
+  - **Blue/Green Deployments:** Spins up a new environment (green) and switches traffic over from the old environment (blue).
+
+---
+
+#### **2. Deployment Types**
+
+| **Deployment Type** | **Description**                                                                                      | **Pros**                                              | **Cons**                                               |
+|---------------------|------------------------------------------------------------------------------------------------------|-------------------------------------------------------|--------------------------------------------------------|
+| **In-Place**        | Updates the existing instances with the new revision.                                                 | Simple, no new infrastructure needed.                 | Risk of downtime, possible inconsistencies.             |
+| **Blue/Green**      | New instances are launched with the new revision and traffic is shifted to these instances when ready. | Zero downtime, easy rollback.                         | Higher cost, requires managing two environments.        |
+
+---
+
+#### **3. AppSpec File**
+- **Definition:** The AppSpec file defines the deployment instructions and hooks for CodeDeploy.
+- **Supported Formats:** YAML or JSON.
+- **Location:** Must be located in the root directory of the application bundle (in S3, GitHub, etc.).
+  
+**Key Sections:**
+  - **version:** Specifies the version of the AppSpec file.
+  - **os:** The target operating system (`linux` or `windows`).
+  - **files:** Describes the source and destination paths for files to be copied during deployment.
+  - **hooks:** Defines lifecycle event hooks to run scripts or commands during the deployment.
+
+---
+
+#### **4. Lifecycle Hooks (EC2/On-Premises)**
+
+| **Hook**                  | **Description**                                                                                   |
+|---------------------------|---------------------------------------------------------------------------------------------------|
+| **ApplicationStop**        | Stops the currently running application before the deployment.                                    |
+| **BeforeInstall**          | Pre-installation steps like taking backups or stopping services.                                  |
+| **AfterInstall**           | Post-installation steps like configuring the environment or setting permissions.                  |
+| **ApplicationStart**       | Starts the application after the new version is installed.                                        |
+| **ValidateService**        | Verifies that the application is running correctly (e.g., smoke tests).                           |
+| **BeforeAllowTraffic**     | Runs before traffic is routed to the new version, typically used for final checks or validations. |
+| **AfterAllowTraffic**      | Runs after traffic is routed to the new version, used for cleanup or monitoring tasks.            |
+
+---
+
+#### **5. Rollbacks**
+- CodeDeploy can automatically roll back to the previous revision if:
+  - Deployment fails (e.g., lifecycle event script fails).
+  - Instances fail health checks.
+  - You configure **CloudWatch Alarms** to trigger a rollback.
+
+---
+
+#### **6. Deployment Configurations**
+- **OneAtATime:** Deploys to one instance at a time.
+- **HalfAtATime:** Deploys to 50% of instances at a time.
+- **AllAtOnce:** Deploys to all instances at once (fast, but risky for production).
+
+---
+
+#### **7. CodeDeploy Agent**
+- For **EC2/On-Premises Deployments**, CodeDeploy requires an agent running on the instance.
+- The agent communicates with the CodeDeploy service and executes the deployment instructions as per the AppSpec file.
+  
+---
+
+#### **8. Monitoring and Logging**
+- **CloudWatch Logs:** Capture logs for each lifecycle event and deployment.
+- **SNS Notifications:** Can notify via email/SMS if a deployment fails or succeeds.
+- **CloudWatch Alarms:** Use alarms to trigger rollbacks or notifications based on deployment health metrics.
+
+---
+
+#### **9. Permissions (IAM)**
+- Ensure that:
+  - **CodeDeploy Service Role** has the correct permissions to interact with other AWS services (e.g., EC2, Lambda).
+  - **EC2 Role** allows the instance to communicate with the CodeDeploy service (for pulling the deployment bundle, running scripts, etc.).
+
+---
+
+#### **10. Sample AppSpec File (YAML)**
+```yaml
+version: 0.0
+os: linux
+files:
+  - source: /app/source/
+    destination: /var/www/myapp
+  - source: /config/settings.conf
+    destination: /etc/myapp/settings.conf
+hooks:
+  ApplicationStop:
+    - location: scripts/stop_server.sh
+      timeout: 300
+      runas: root
+  BeforeInstall:
+    - location: scripts/install_dependencies.sh
+      timeout: 600
+      runas: root
+  AfterInstall:
+    - location: scripts/change_permissions.sh
+      timeout: 600
+      runas: root
+  ApplicationStart:
+    - location: scripts/start_server.sh
+      timeout: 300
+      runas: root
+  ValidateService:
+    - location: scripts/validate_service.sh
+      timeout: 300
+      runas: root
+```
+
+##### **Explanation:**
+- **version:** Specifies the version of the AppSpec file (`0.0` is the required value).
+- **os:** Specifies the operating system (in this case, `linux`).
+- **files:** Specifies the source paths in the deployment bundle and the destination paths on the target instance.
+  - **source:** Refers to a directory or file inside the build artifact (e.g., uploaded to S3).
+  - **destination:** Specifies the path where the files should be copied on the target instance.
+- **hooks:** Defines the deployment lifecycle event hooks and associated scripts.
+  - Example: The `ApplicationStop` hook runs the `stop_server.sh` script before stopping the current version of the app.
+
+---
+
+#### **11. Common CodeDeploy Issues**
+- **AppSpec File Errors:** Ensure proper syntax (YAML/JSON) and that paths and hooks are correct.
+- **Agent Issues:** Ensure the CodeDeploy agent is installed and running on EC2/On-Premises instances.
+- **Permission Errors:** Verify IAM roles are correctly assigned to CodeDeploy and EC2 instances.
+- **Script Timeouts:** Make sure your lifecycle event scripts are correctly configured with reasonable timeouts.
+
+
 ## Tables
 
 ### Deployment Methods
