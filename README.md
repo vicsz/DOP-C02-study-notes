@@ -668,6 +668,69 @@ CodeCommit**, **CodeBuild**, and **CodeDeploy**, demonstrating multi-service orc
 
 ---
 
+### **AWS CodeArtifact Study Sheet**
+
+#### **1. Overview**
+- **AWS CodeArtifact** is a fully managed artifact repository service for securely storing, sharing, and publishing software packages.
+- Supports popular package formats like **npm**, **Maven**, **PyPI**, and **NuGet**.
+- It integrates with CI/CD tools like **CodeBuild** and **CodePipeline** to manage dependencies and package distribution in the development process.
+
+---
+
+#### **2. Key Components**
+- **Domains**: A domain aggregates repositories, allowing sharing of resources and policies.
+- **Repositories**: Storage for package versions; each repository can contain multiple package formats.
+- **Upstream Repositories**: CodeArtifact repositories can proxy other repositories like **public registries** (e.g., npmjs.com) to pull in external dependencies.
+- **Package Versioning**: Supports version control for different packages, ensuring consistency in builds and deployments.
+  
+---
+
+#### **3. Key Features**
+- **Access Control with IAM**: Define fine-grained access using IAM roles and policies. Only authorized users or services can publish, retrieve, or modify packages.
+- **Encryption**: Packages are encrypted at rest using AWS KMS.
+- **Dependency Management**: CodeArtifact simplifies managing dependencies for projects, particularly in complex, multi-team environments.
+- **Integration with CodeBuild**: CodeArtifact can be directly accessed within CodeBuild projects, streamlining dependency resolution during the build process.
+
+---
+
+#### **4. Common Use Cases**
+- **Private Package Hosting**: Host private versions of packages internally and control who can access them.
+- **Dependency Caching**: Use CodeArtifact as a proxy to external repositories, reducing dependency fetch times and mitigating external repository downtimes.
+- **Security and Governance**: Track and control access to software packages, ensuring only approved dependencies are used in production environments.
+  
+---
+
+#### **5. Key Commands and API**
+- **Publish Packages**: `npm publish`, `mvn deploy`, or `pip upload` directly from your CI/CD pipeline to CodeArtifact.
+- **Consume Packages**: Use **aws codeartifact login** to authenticate package managers (npm, Maven, pip) with CodeArtifact.
+- **Create Repository**: `aws codeartifact create-repository` to create new repositories for storing artifacts.
+- **Associate Upstream**: Link to external or public repositories using `aws codeartifact associate-external-connection`.
+
+---
+
+#### **6. Example Configuration (npm)**
+
+```bash
+# Authenticate npm with CodeArtifact
+aws codeartifact login --tool npm --repository my-repo --domain my-domain --domain-owner 123456789012
+
+# Add npm dependencies from CodeArtifact
+npm install <package-name>
+
+# Publish package to CodeArtifact
+npm publish
+```
+
+---
+
+#### **7. Summary of Key Concepts**
+- **Repository Management**: Organize your package storage with **Domains** and **Repositories** for easy access and sharing across teams.
+- **Upstream Repositories**: Proxy external repositories to avoid network issues and ensure faster, reliable dependency resolution.
+- **Access Control & Security**: Use IAM policies for secure access, and encrypt packages with AWS KMS.
+- **Integration**: Seamlessly integrates with **AWS CodeBuild** and **CodePipeline** for dependency resolution and artifact publishing in CI/CD workflows.
+
+---
+
 ### **AWS CloudFormation Study Sheet**
 
 #### **1. What is AWS CloudFormation?**
