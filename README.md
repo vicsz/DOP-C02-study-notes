@@ -4,7 +4,7 @@ Study Notes for AWS Certified DevOps Engineer – Professional (DOP-C02)
 ## Useful Links
 
 ### Official Exam Guide
-- [AWS Certified DevOps Engineer Professional Exam Guide](https://d1.awsstatic.com/training-and-certification/docs-devops/AWS-Certified-DevOps-Engineer-Professional_Exam-Guide.pdf) -- high level overview
+- [AWS Certified DevOps Engineer Professional Exam Guide](https://d1.awsstatic.com/training-and-certification/docs-devops-pro/AWS-Certified-DevOps-Engineer-Professional_Exam-Guide.pdf) -- high level overview
 
 ### Study Guides / Notes
 - [Toward the Cloud - Study Guide](https://towardsthecloud.com/aws-devops-engineer-professional-exam-guide) -- more indepth DOP-C02 overview (compared official guide)
