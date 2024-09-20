@@ -185,6 +185,125 @@ hooks:
 - **Permission Errors:** Verify IAM roles are correctly assigned to CodeDeploy and EC2 instances.
 - **Script Timeouts:** Make sure your lifecycle event scripts are correctly configured with reasonable timeouts.
 
+Here's a **shorter, optimized CodeBuild Study Sheet** in **Markdown** with a concise **sample buildspec.yml** that covers all the key concepts, without redundancy.
+
+---
+
+### **AWS CodeBuild Study Sheet**
+
+#### **1. Overview**
+- **AWS CodeBuild** is a fully managed service for **compiling source code**, running tests, and producing artifacts.
+- It integrates with **CodePipeline**, **S3**, **CodeDeploy**, and other AWS services for automating CI/CD workflows.
+
+---
+
+#### **2. Key Components**
+- **Source**: Code is pulled from sources like **CodeCommit**, **GitHub**, **Bitbucket**, or **S3**.
+- **Buildspec File**: YAML file defining the build phases, environment variables, artifacts, caching, and reports.
+- **Artifacts**: Output from the build process, stored in **S3** or used by other services.
+- **Reports**: Test reports (e.g., JUnit, Cucumber) that can be viewed in the CodeBuild console.
+- **Caching**: Reuse dependencies across builds (e.g., `npm`, `maven`), reducing build time.
+- **Batch Builds**: Run multiple builds in parallel or sequentially, useful for multi-environment or multi-version workflows.
+
+---
+
+#### **3. Buildspec File Key Sections**
+- **version**: Specifies the buildspec version (`0.2` recommended).
+- **env**: Defines environment variables, secrets, and proxies.
+  - **Secrets Manager**: Injects sensitive data (e.g., `DB_PASSWORD`) from AWS Secrets Manager.
+  - **Parameter Store**: Retrieves parameters (e.g., `API_KEY`) from AWS Systems Manager Parameter Store.
+- **phases**: The build lifecycle is split into these phases:
+  - **install**: Install necessary tools or dependencies.
+  - **pre_build**: Setup before the build (e.g., Docker login).
+  - **build**: Main build step (e.g., compiling code, running tests).
+  - **post_build**: Tasks after build (e.g., packaging artifacts).
+  - **finally**: Runs even if earlier phases fail (used for cleanup).
+- **artifacts**: Specifies files to store after build (e.g., upload to S3).
+- **cache**: Defines paths to cache to speed up subsequent builds (e.g., `maven`, `npm`).
+- **reports**: Generate and upload test results for analysis.
+
+---
+
+#### **4. Key Features**
+- **IAM Permissions**: CodeBuild needs roles to access services (e.g., S3, Secrets Manager, CodeCommit).
+- **Exported Variables**: Environment variables can be defined in one phase and reused in subsequent phases using the `export` command.
+- **Proxy Support**: If the build is behind a proxy, configure HTTP/HTTPS proxies via environment variables.
+- **Batch Builds**: Execute multiple builds in parallel or sequentially within a single project, ideal for complex workflows.
+
+---
+
+##### **Sample Buildspec File (`buildspec.yml`)**
+
+```yaml
+version: 0.2
+
+# Environment variables, including secrets and parameter store.
+env:
+  variables:
+    ENVIRONMENT: production                    # Custom environment variable.
+  secrets-manager:
+    DB_PASSWORD: my-database-password          # Securely fetch from AWS Secrets Manager.
+  parameter-store:
+    API_KEY: /myapp/api/key                    # Fetch from Parameter Store.
+  proxy:
+    HTTP_PROXY: http://proxy.example.com:8080  # Set proxy for build environment.
+
+# Build lifecycle phases.
+phases:
+  install:
+    commands:
+      - echo "Installing dependencies..."
+      - apt-get update && apt-get install -y awscli
+  
+  pre_build:
+    commands:
+      - echo "Logging into Docker..."
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <your_ecr_url>
+
+  build:
+    commands:
+      - echo "Building the project..."
+      - export BUILD_ID=$(uuidgen)             # Exported variable for reuse.
+      - mvn clean install                      # Example: Build Java Maven project.
+
+  post_build:
+    commands:
+      - echo "Packaging build..."
+      - zip -r myapp.zip target/               # Package build output.
+  
+  finally:
+    commands:
+      - echo "Cleaning up resources..."
+      - aws s3 rm s3://my-bucket/temp --recursive  # Example cleanup action.
+
+# Artifacts to upload after the build.
+artifacts:
+  files:
+    - myapp.zip                                # Package to upload.
+  base-directory: target                       # Where the output files are stored.
+
+# Reports configuration for test results.
+reports:
+  test-reports:
+    files:
+      - '**/*'                                 # Report files pattern.
+    base-directory: test-reports               # Directory with test results.
+
+# Caching configuration to speed up future builds.
+cache:
+  paths:
+    - /root/.m2/**/*                           # Cache Maven dependencies.
+    - /root/.npm/**/*                          # Cache npm modules.
+```
+
+---
+
+#### **5. Summary of Key Concepts**
+- **Phases:** Organize your build process into logical steps with **install**, **pre_build**, **build**, **post_build**, and **finally**.
+- **Environment Variables:** Leverage **Secrets Manager** and **Parameter Store** for sensitive data, and use exported variables across phases.
+- **Caching:** Speed up subsequent builds by caching dependencies.
+- **Artifacts & Reports:** Define what gets saved (e.g., build outputs) and generate test reports for visibility.
+
 
 ## Tables
 
