@@ -1360,5 +1360,104 @@ Here’s a breakdown to help you choose the right secret storage solution:
 
 ---
 
+
+### Supplementary Services**
+
+#### **Analytics & Data Processing**
+- **Amazon Athena**: A serverless, interactive query service for analyzing data in Amazon S3 using standard SQL.
+- **Amazon EMR**: A managed cluster platform to process and analyze big data using Hadoop, Spark, and other frameworks.
+- **Amazon Kinesis Data Firehose**: A fully managed service for real-time streaming data delivery to destinations like S3 and Redshift.
+- **Amazon Kinesis Data Streams**: A service for building custom real-time applications that process or analyze streaming data.
+- **Amazon OpenSearch Service**: A managed service to deploy, operate, and scale OpenSearch clusters for search, monitoring, and visualization.
+
+#### **Application Integration & Development**
+- **Amazon AppFlow**: A service to securely integrate AWS services with SaaS applications for data transfer.
+- **AWS App Runner**: A fully managed service for deploying containerized web applications and APIs without managing infrastructure.
+- **EC2 Image Builder**: A service to automate the creation, management, and deployment of custom machine images.
+- **AWS Serverless Application Repository**: A repository of pre-built serverless applications that can be deployed in AWS.
+- **AWS App2Container**: A tool to automatically containerize Java and .NET applications for deployment in ECS or EKS.
+- **AWS Copilot**: A CLI tool to simplify the development and deployment of containerized applications on AWS.
+- **Amazon Elastic Container Registry (ECR)**: A fully managed Docker container registry for storing, managing, and deploying container images.
+- **Amazon Elastic Container Service (ECS)**: A fully managed container orchestration service for running and managing Docker containers.
+- **Amazon Elastic Kubernetes Service (EKS)**: A managed service to run Kubernetes without managing control planes or nodes.
+- **Amazon EKS Distro**: A Kubernetes distribution that enables running Kubernetes on-premises or in any cloud.
+- **AWS Fargate**: A serverless compute engine for containers that runs ECS or EKS workloads without managing infrastructure.
+- **Red Hat OpenShift Service on AWS (ROSA)**: A managed Red Hat OpenShift service for running Kubernetes clusters on AWS.
+
+#### **Databases**
+- **Amazon Aurora**: A high-performance, fully managed relational database compatible with MySQL and PostgreSQL.
+- **Amazon Aurora Serverless v2**: A version of Aurora that automatically scales database capacity based on application needs.
+- **AWS Database Migration Service (AWS DMS)**: A service to migrate databases to AWS with minimal downtime.
+- **Amazon DocumentDB (with MongoDB compatibility)**: A fully managed document database service compatible with MongoDB workloads.
+- **Amazon DynamoDB**: A fully managed NoSQL database service for fast and flexible performance at scale.
+- **Amazon ElastiCache**: A fully managed in-memory caching service supporting Redis and Memcached.
+- **Amazon MemoryDB for Redis**: A Redis-compatible, in-memory database for ultra-fast, low-latency data processing.
+- **Amazon RDS**: A fully managed relational database service supporting multiple engines like MySQL, PostgreSQL, and Oracle.
+- **Amazon Redshift**: A fully managed data warehouse for fast querying and analysis of large datasets.
+
+#### **Developer Tools**
+- **AWS CLI**: A unified tool to manage AWS services from the command line.
+- **AWS CloudShell**: A browser-based shell to interact with AWS resources from the console.
+- **Amazon CodeGuru**: A machine learning-powered tool for automated code reviews and performance recommendations.
+- **AWS CodeStar**: A platform for setting up CI/CD pipelines to automate application deployments.
+
+#### **Resilience & Optimization**
+- **AWS Fault Injection Simulator (AWS FIS)**: A fully managed service for running chaos engineering experiments to test application resilience.
+- **AWS Compute Optimizer**: A service that recommends optimal EC2 instance types based on resource usage.
+- **AWS Control Tower**: A service to set up and govern multi-account AWS environments using best practices.
+- **AWS License Manager**: A service to manage, track, and control software licenses across AWS and on-premises environments.
+- **Amazon Managed Grafana**: A fully managed service for running Grafana dashboards to visualize metrics from multiple data sources.
+- **Amazon Managed Service for Prometheus**: A managed monitoring service compatible with Prometheus for collecting and querying metrics.
+- **AWS Proton**: A fully managed service for automating infrastructure provisioning and code deployment for container and serverless applications.
+- **AWS Resilience Hub**: A service for assessing and improving the resilience of applications on AWS.
+- **AWS Service Catalog**: A tool to centrally manage and distribute approved products (e.g., CloudFormation templates) for organizational use.
+
+#### **Operations & Governance**
+- **AWS Trusted Advisor**: A service that provides real-time best practice recommendations for cost optimization, security, and performance.
+- **Amazon API Gateway**: A fully managed service to create, publish, and manage secure APIs at scale.
+- **AWS Client VPN**: A fully managed, secure VPN service for connecting to AWS and on-premises networks.
+- **AWS PrivateLink**: A service for private connectivity between VPCs and AWS services without exposing traffic to the public internet.
+- **Amazon Route 53**: A scalable DNS and domain name registration service with health-checking capabilities.
+- **AWS Site-to-Site VPN**: A service for securely connecting on-premises networks to AWS over VPN.
+- **AWS Transit Gateway**: A network hub that connects VPCs and on-premises networks in a scalable manner.
+- **Amazon VPC**: A service to provision logically isolated cloud resources in a virtual network.
+- **AWS Certificate Manager (ACM)**: A service for provisioning and managing SSL/TLS certificates for securing websites and applications.
+- **AWS CloudHSM**: A managed hardware security module (HSM) service for cryptographic operations.
+- **Amazon Cognito**: A service to add user sign-up, sign-in, and authentication to web and mobile apps.
+- **Amazon Detective**: A service for analyzing and investigating security issues using machine learning.
+- **AWS Directory Service**: A service that enables AWS resources to work with Microsoft Active Directory.
+- **Amazon GuardDuty**: A threat detection service that continuously monitors for malicious activity.
+- **AWS IAM Identity Center (AWS SSO)**: A service for centrally managing SSO access to AWS accounts and business applications.
+- **AWS Identity and Access Management (IAM)**: A service for managing access to AWS resources with fine-grained permission control.
+- **Amazon Inspector**: A service that automatically assesses the security of applications deployed on AWS.
+- **AWS Key Management Service (KMS)**: A managed service for creating and controlling cryptographic keys.
+- **Amazon Macie**: A security service that uses machine learning to identify and protect sensitive data in S3.
+- **AWS Network Firewall**: A managed firewall service for controlling traffic to and from your VPCs.
+- **AWS Resource Access Manager (AWS RAM)**: A service for sharing AWS resources across multiple accounts.
+- **AWS Security Hub**: A service that provides a comprehensive view of security alerts across AWS accounts.
+- **AWS Security Token Service (STS)**: A service for providing temporary, limited-privilege credentials for AWS resources.
+- **AWS Shield**: A managed DDoS protection service for AWS applications.
+- **AWS WAF**: A web application firewall that helps protect against common web exploits.
+
+#### **Messaging & Workflow**
+- **Amazon Simple Notification Service (SNS)**: A fully managed pub/sub messaging service for sending notifications.
+- **Amazon Simple Queue Service (SQS)**: A fully managed message queue service for decoupling application components.
+- **AWS Step Functions**: A service for orchestrating distributed applications using visual workflows.
+
+#### **Storage & Backup**
+- **AWS Backup**: A fully managed service to automate backups of AWS resources.
+- **Amazon Elastic Block Store (EBS)**: Persistent block storage for EC2 instances.
+- **AWS Elastic Disaster Recovery**: A service to recover applications from outages using automated, scalable disaster recovery.
+- **Amazon Elastic File System (EFS)**: A fully managed, scalable file system for use with AWS services and on-premises resources.
+- **Amazon FSx for Lustre**: A fully managed file system optimized for compute-intensive workloads like machine learning.
+- **Amazon FSx for NetApp ONTAP**: A fully managed NetApp ONTAP file system on AWS.
+- **Amazon FSx for OpenZFS**: A fully managed ZFS file system for performance-intensive workloads.
+- **Amazon FSx for Windows File Server**: A fully managed Windows file system with support for SMB protocol.
+- **Amazon S3**: An object storage service that offers industry-leading scalability, data availability, and security.
+- **Amazon S3 Glacier**: A low-cost storage service for long-term data archiving and backup.
+- **AWS Storage Gateway**: A hybrid cloud storage service that provides on-premises access to virtually unlimited cloud storage.
+
+--- 
+
 ## Notes 
 - AWS CodeCatalyst is not on the the exam -- given it's recent (2023) introduction.
