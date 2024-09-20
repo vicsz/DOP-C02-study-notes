@@ -1522,15 +1522,6 @@ Here’s a breakdown to help you choose the right secret storage solution:
 
 --- 
 
-Certainly! Here are some additional **rules of thumb** that could be useful for the **AWS Certified DevOps Engineer – Professional** exam:
-
----
-
-### **General Tips:**
-Here’s the revised version of your **General Tips** with the AWS services and key "keywords" in bold:
-
----
-
 ### **General Tips:**
 
 - **For orchestration of multiple AWS services** or **complex workflows**, the answer is likely **AWS Step Functions**.
