@@ -1279,5 +1279,17 @@ Here’s a breakdown to help you choose the right secret storage solution:
 
 ---
 
+### Infrastructure as Code (IaC) Options and Tools
+
+| **Service**                 | **Purpose**                                                                 | **Key Features**                                                                                                                                                    | **When to Use**                                                                                                      |
+|-----------------------------|-----------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
+| **AWS CloudFormation**       | Declarative IaC tool using YAML/JSON templates.                             | - Automated provisioning, updates, and management of AWS resources.<br> - Use **StackSets** for cross-account and cross-region deployments.<br> - Supports **nested stacks** for modular design.<br> - Tight integration with other AWS services.<br> - Supports **drift detection** and rollback features. | - Need a native AWS IaC tool.<br> - Require infrastructure management across **multiple accounts and regions**.<br> - Prefer declarative infrastructure definition.<br> - Want modular, reusable templates. |
+| **AWS CDK (Cloud Development Kit)** | Define AWS infrastructure using high-level programming languages.       | - Supports **TypeScript, Python, Java, etc.**<br> - Generates CloudFormation templates under the hood.<br> - Object-oriented design patterns enable reusable and maintainable infrastructure code.<br> - Allows using programming constructs (loops, conditionals, functions). | - Teams that prefer using programming languages for IaC.<br> - Need **complex infrastructure** management.<br> - Want to reuse code constructs (e.g., inheritance, encapsulation). |
+| **AWS SAM (Serverless Application Model)** | Simplifies IaC for serverless architectures.                        | - Shortens syntax for **serverless resources** (e.g., Lambda, API Gateway, DynamoDB).<br> - Provides **SAM CLI** for local testing of serverless apps.<br> - Automatically generates CloudFormation templates.<br> - Integrates with AWS services like **Step Functions** and **S3**. | - Need a simplified IaC tool for **serverless applications**.<br> - Want **fewer lines of code** than CloudFormation for Lambda and API Gateway.<br> - Require local testing capabilities with **SAM CLI**. |
+| **Terraform (Non-AWS)**      | Multi-cloud IaC tool from HashiCorp using HCL (HashiCorp Configuration Language). | - Supports AWS, Azure, GCP, and other cloud providers.<br> - Manages resources using **state files** for tracking.<br> - **Provider agnostic** with modules for each cloud provider.<br> - Large community support with **Terraform Registry** for reusable modules.<br> - Better suited for **hybrid cloud environments**. | - Multi-cloud or **hybrid cloud environments**.<br> - Need flexibility for managing resources across multiple cloud providers.<br> - Teams already familiar with **HCL** and HashiCorp tools. |
+
+
+---
+
 ## Notes 
 - AWS CodeCatalyst is not on the the exam -- given it's recent (2023) introduction.
