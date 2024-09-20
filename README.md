@@ -1527,25 +1527,30 @@ Certainly! Here are some additional **rules of thumb** that could be useful for 
 ---
 
 ### **General Tips:**
+Here’s the revised version of your **General Tips** with the AWS services and key "keywords" in bold:
+
+---
+
+### **General Tips:**
 
 - **For orchestration of multiple AWS services** or **complex workflows**, the answer is likely **AWS Step Functions**.
 - **When choosing a solution for storing and rotating secrets (like API keys, passwords)**, the answer is most likely **AWS Secrets Manager**. If automatic rotation is not needed and cost is a concern, consider **AWS Systems Manager Parameter Store**.
 - **For questions related to centralizing and automating management across multiple AWS accounts** (such as governance or account creation), the answer is likely **AWS Control Tower** or **AWS Organizations**.
-- **If the question involves automating infrastructure deployment or managing infrastructure as code**, the answer will likely be **AWS CloudFormation** or **AWS CDK** (Cloud Development Kit) if programming languages are involved.
-- **If the scenario is about improving application performance or cost optimization in compute resources**, the answer is likely **AWS Compute Optimizer** or **Auto Scaling**.
+- **If the question involves automating infrastructure deployment** or **managing infrastructure as code**, the answer will likely be **AWS CloudFormation** or **AWS CDK** (Cloud Development Kit) if programming languages are involved.
+- **If the scenario is about improving application performance** or **cost optimization** in compute resources, the answer is likely **AWS Compute Optimizer** or **Auto Scaling**.
 - **For logging, monitoring, or tracking performance** of applications and infrastructure, the answer will often be **Amazon CloudWatch**. For **log aggregation**, consider **Amazon CloudWatch Logs** or **AWS CloudTrail** (if tracking API calls or governance is involved).
-- **If the question involves auditing, maintaining, or tracking compliance with security standards**, it's most likely **AWS Config** or **AWS Audit Manager** (for audit-related tasks).
-- **For multi-region or disaster recovery (DR) architectures**, the answer is often **Amazon Route 53** for DNS failover or **AWS Elastic Disaster Recovery** for DR-specific scenarios.
-- **For hybrid cloud architectures or extending on-premise environments to the cloud**, the answer will often involve **AWS Direct Connect** or **AWS Storage Gateway**.
+- **If the question involves auditing, maintaining, or tracking compliance** with security standards, it's most likely **AWS Config** or **AWS Audit Manager** (for audit-related tasks).
+- **For multi-region or disaster recovery (DR) architectures**, the answer is often **Amazon Route 53** for **DNS failover** or **AWS Elastic Disaster Recovery** for **DR-specific scenarios**.
+- **For hybrid cloud architectures** or **extending on-premise environments to the cloud**, the answer will often involve **AWS Direct Connect** or **AWS Storage Gateway**.
 - **For encryption and key management** (i.e., securing sensitive data, especially encryption of data at rest or in transit), look for **AWS Key Management Service (KMS)** or **AWS CloudHSM** (for hardware-level encryption needs).
 - **When deploying and managing Docker containers without worrying about infrastructure** (serverless for containers), the answer will likely be **AWS Fargate**.
-- **For managing a containerized application with orchestration (e.g., microservices)**, the answer will likely be **Amazon Elastic Kubernetes Service (EKS)** for Kubernetes or **Amazon Elastic Container Service (ECS)** for AWS-native container orchestration.
+- **For managing a containerized application with orchestration** (e.g., microservices), the answer will likely be **Amazon Elastic Kubernetes Service (EKS)** for **Kubernetes** or **Amazon Elastic Container Service (ECS)** for **AWS-native container orchestration**.
 - **If the question is about managing Docker images** (storing, retrieving, and managing container images), the answer will likely be **Amazon Elastic Container Registry (ECR)**.
-- **If the question involves controlling access to AWS resources**, it's almost always **AWS Identity and Access Management (IAM)** or **IAM Identity Center (formerly AWS SSO)** for single sign-on needs.
+- **If the question involves controlling access to AWS resources**, it's almost always **AWS Identity and Access Management (IAM)** or **IAM Identity Center (formerly AWS SSO)** for **single sign-on needs**.
 - **For DDoS protection**, the answer is typically **AWS Shield** (Standard or Advanced).
-- **For protecting web applications from exploits and common web vulnerabilities**, the answer is likely **AWS WAF** (Web Application Firewall).
+- **For protecting web applications from exploits** and **common web vulnerabilities**, the answer is likely **AWS WAF** (Web Application Firewall).
 - **For securing traffic between VPCs or between on-premises and AWS**, the answer is likely **AWS PrivateLink** or **AWS Transit Gateway**.
-- For real-time threat detection and anomaly detection across AWS services, the answer is likely Amazon GuardDuty.
-- For centralized security findings aggregation and compliance tracking, the answer is likely AWS Security Hub.
-- For vulnerability scanning of EC2 instances and container images, the answer is likely Amazon Inspector.
+- **For real-time threat detection** and **anomaly detection** across AWS services, the answer is likely **Amazon GuardDuty**.
+- **For centralized security findings aggregation** and **compliance tracking**, the answer is likely **AWS Security Hub**.
+- **For vulnerability scanning** of **EC2 instances** and **container images**, the answer is likely **Amazon Inspector**. 
 
