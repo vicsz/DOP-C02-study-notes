@@ -46,3 +46,6 @@ Focus on understanding the **core DevOps services**, such as:
 - **Amazon EventBridge**: Serverless event bus that allows you to route events between AWS services or SaaS applications.
 - **Amazon SQS**: Fully managed queuing service for decoupling microservices and ensuring reliable message delivery.
 - **Amazon SNS**: Pub-sub messaging service for sending notifications
+
+## Notes 
+- AWS CodeCatalyst is not on the the exam -- given it's recent (2023) introduction.
