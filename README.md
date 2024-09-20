@@ -49,5 +49,16 @@ Focus on understanding the **core DevOps services**, such as:
 - **Amazon SQS**: Fully managed queuing service for decoupling microservices and ensuring reliable message delivery.
 - **Amazon SNS**: Pub-sub messaging service for sending notifications
 
+## Tables
+
+| **Method**             | **Description**                                                                 | **Advantages**                                               | **Challenges**                                                | **Use Cases**                                                 | **AWS Services** (related)                                       |
+|------------------------|---------------------------------------------------------------------------------|--------------------------------------------------------------|----------------------------------------------------------------|-----------------------------------------------------------------|------------------------------------------------------------------|
+| **Deploy in Place**     | Deploys new code directly onto existing instances or infrastructure.             | Simple, no need for extra infrastructure.                     | Risk of downtime, inconsistent environments during deployment.  | Smaller applications with minimal traffic.                       | Elastic Beanstalk, CodeDeploy (in-place)                          |
+| **Rolling Deployment**  | Gradually replaces instances with new ones, while keeping some of the old ones running. | Minimizes downtime, supports graceful replacement.             | Complexity in managing partial deployments, slow rollout.        | Medium- to large-scale applications that need some availability during deployment. | CodeDeploy, Elastic Beanstalk, Auto Scaling                        |
+| **Immutable Deployment**| New instances are created with the new version of the application, and old instances are terminated after traffic is routed to the new ones. | Reduces risk of configuration drift, ensures consistency.      | Requires more infrastructure, higher cost.                      | Highly critical applications needing consistent environments.     | CodeDeploy (immutable), Auto Scaling, Elastic Beanstalk            |
+| **Traffic Splitting**   | Diverts a small percentage of traffic to the new version before full rollout.    | Minimizes risk, allows testing with live traffic.              | Complex to implement and monitor, needs good rollback mechanisms. | Testing new features with minimal impact, A/B testing.            | AWS App Mesh, Lambda Traffic Shifting, API Gateway, CodeDeploy     |
+| **Blue/Green Deployment**| Two separate environments (Blue and Green) are maintained. Traffic is switched to the new environment (Green) when ready. | Zero downtime, easy rollback.                                 | High infrastructure cost, complex environment management.       | Mission-critical systems needing zero downtime during deployment. | Elastic Beanstalk, CodeDeploy, Route 53, ELB, Auto Scaling         |
+
+
 ## Notes 
 - AWS CodeCatalyst is not on the the exam -- given it's recent (2023) introduction.
