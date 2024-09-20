@@ -304,13 +304,260 @@ cache:
 - **Caching:** Speed up subsequent builds by caching dependencies.
 - **Artifacts & Reports:** Define what gets saved (e.g., build outputs) and generate test reports for visibility.
 
-Here’s a concise **CloudFormation Cheat Sheet** with key concepts and **one sample CloudFormation template** that includes all the essential features for the **AWS Certified DevOps Engineer – Professional (DOP-C02)** exam.
+Here’s a **CodePipeline Cheat Sheet** with key concepts relevant for the **AWS Certified DevOps Engineer – Professional (DOP-C02)** exam, along with an example **CodePipeline YAML template** that includes all the key concepts.
 
 ---
 
+### **AWS CodePipeline Cheat Sheet**
+
+#### **1. What is AWS CodePipeline?**
+- **AWS CodePipeline** is a fully managed continuous integration and continuous delivery (CI/CD) service.
+- Automates the build, test, and deploy phases of your release process.
+- Integrates with multiple services: **CodeBuild**, **CodeDeploy**, **S3**, **Lambda**, **ECS**, **CloudFormation**, etc.
+
+---
+
+#### **2. Key CodePipeline Concepts**
+
+##### **2.1 Pipeline Stages**
+- A **pipeline** consists of **stages**, and each stage has **actions**.
+  - **Source Stage**: Fetches code or artifacts (e.g., from **S3**, **CodeCommit**, **GitHub**).
+  - **Build Stage**: Compiles, runs tests, and produces artifacts (typically using **CodeBuild**).
+  - **Deploy Stage**: Deploys applications (e.g., using **CodeDeploy**, **CloudFormation**, **ECS**).
+  - **Approval Stage**: Manual approvals before proceeding to the next stage.
+
+##### **2.2 Actions**
+- **Actions** are tasks within a stage. Common action types:
+  - **Source**: Pulls code from a repository (e.g., **S3**, **GitHub**, **CodeCommit**).
+  - **Build**: Executes a build job (e.g., **CodeBuild**, **Jenkins**).
+  - **Test**: Runs test suites.
+  - **Deploy**: Deploys artifacts (e.g., **CodeDeploy**, **CloudFormation**, **ECS**).
+  - **Invoke**: Calls Lambda functions.
+  - **Approval**: Requires manual intervention to approve or reject.
+
+##### **2.3 Pipeline Artifacts**
+- **Artifacts** are the output from one action that can be passed to another action (e.g., build output from **CodeBuild** used by a **CodeDeploy** action).
+
+##### **2.4 Pipeline Triggers**
+- Pipelines can be triggered by events:
+  - **Source Change**: Automatically start when new code is pushed (e.g., to **CodeCommit**, **GitHub**).
+  - **Manual Start**: Users can manually start a pipeline.
+  - **Schedule**: Start the pipeline at specific intervals.
+
+##### **2.5 Cross-Account Pipelines**
+- **Cross-account roles** allow CodePipeline to interact with resources in another AWS account.
+- Requires setting up appropriate **IAM roles** with trust policies.
+
+#### **2.6 Encryption**
+- Artifacts and the pipeline can be encrypted using **AWS KMS** (Key Management Service).
+  
+##### **2.7 Retry Behavior**
+- CodePipeline retries failed actions automatically. The default behavior is:
+  - **1 retry** for most action types.
+
+##### **2.8 Manual Approvals**
+- Pipelines can include **manual approval** steps to require human intervention before continuing.
+- **SNS notifications** can be sent when an approval is pending.
+
+##### **2.9 Pre/Post Deployment Hooks**
+- **CodeDeploy** and **CloudFormation** actions can include pre- and post-deployment lifecycle hooks.
+  - Example: A **CodeDeploy** action can trigger `BeforeInstall`, `AfterInstall`, and `ValidateService` hooks.
+
+---
+
+#### **3. CodePipeline Best Practices**
+- **Use Multiple Stages**: Break the pipeline into multiple stages to isolate steps (source, build, deploy).
+- **Manual Approvals**: Implement approvals for critical environments (e.g., production).
+- **Monitoring and Alerts**: Use **CloudWatch Events** or **SNS** to monitor pipeline executions.
+- **Cross-Account Pipelines**: Use cross-account pipelines to manage deployments across multiple AWS accounts.
+
+---
+
+#### **4. Example CodePipeline YAML Template**
+
+This template sets up a **basic CI/CD pipeline** with **CodeCommit** as the source, **CodeBuild** for the build process, and **CodeDeploy** to deploy the application.
+
+```yaml
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A basic AWS CodePipeline setup with CodeCommit, CodeBuild, and CodeDeploy.
+
+Resources:
+
+  # IAM Role for CodePipeline with permissions to interact with CodeCommit, CodeBuild, CodeDeploy
+  PipelineServiceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service: "codepipeline.amazonaws.com"
+            Action: "sts:AssumeRole"
+      Policies:
+        - PolicyName: "CodePipelinePermissions"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - "codecommit:*"
+                  - "codebuild:*"
+                  - "codedeploy:*"
+                  - "s3:*"
+                  - "iam:PassRole"
+                Resource: "*"
+
+  # S3 Bucket to store build artifacts between stages
+  CodePipelineArtifactStore:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      VersioningConfiguration:
+        Status: "Enabled"
+
+  # CodePipeline Definition
+  MyPipeline:
+    Type: "AWS::CodePipeline::Pipeline"
+    Properties:
+      RoleArn: !GetAtt PipelineServiceRole.Arn
+      ArtifactStore:
+        Type: S3
+        Location: !Ref CodePipelineArtifactStore
+      Stages:
+        # Source Stage: Pulls source code from CodeCommit
+        - Name: "Source"
+          Actions:
+            - Name: "SourceAction"
+              ActionTypeId:
+                Category: "Source"
+                Owner: "AWS"
+                Provider: "CodeCommit"
+                Version: "1"
+              OutputArtifacts:
+                - Name: "SourceOutput"
+              Configuration:
+                RepositoryName: "MyCodeRepo"
+                BranchName: "main"
+              RunOrder: 1
+
+        # Build Stage: Runs CodeBuild to compile the application
+        - Name: "Build"
+          Actions:
+            - Name: "BuildAction"
+              ActionTypeId:
+                Category: "Build"
+                Owner: "AWS"
+                Provider: "CodeBuild"
+                Version: "1"
+              InputArtifacts:
+                - Name: "SourceOutput"
+              OutputArtifacts:
+                - Name: "BuildOutput"
+              Configuration:
+                ProjectName: "MyCodeBuildProject"
+              RunOrder: 1
+
+        # Deploy Stage: Deploys using CodeDeploy
+        - Name: "Deploy"
+          Actions:
+            - Name: "DeployAction"
+              ActionTypeId:
+                Category: "Deploy"
+                Owner: "AWS"
+                Provider: "CodeDeploy"
+                Version: "1"
+              InputArtifacts:
+                - Name: "BuildOutput"
+              Configuration:
+                ApplicationName: "MyCodeDeployApplication"
+                DeploymentGroupName: "MyDeploymentGroup"
+              RunOrder: 1
+
+  # CodeBuild Project Definition
+  MyCodeBuildProject:
+    Type: "AWS::CodeBuild::Project"
+    Properties:
+      Name: "MyCodeBuildProject"
+      ServiceRole: !GetAtt PipelineServiceRole.Arn
+      Artifacts:
+        Type: "CODEPIPELINE"
+      Source:
+        Type: "CODEPIPELINE"
+      Environment:
+        ComputeType: "BUILD_GENERAL1_SMALL"
+        Image: "aws/codebuild/standard:5.0"
+        Type: "LINUX_CONTAINER"
+      TimeoutInMinutes: 30
+
+  # CodeDeploy Application and Deployment Group
+  MyCodeDeployApplication:
+    Type: "AWS::CodeDeploy::Application"
+    Properties:
+      ApplicationName: "MyCodeDeployApplication"
+  
+  MyCodeDeployDeploymentGroup:
+    Type: "AWS::CodeDeploy::DeploymentGroup"
+    Properties:
+      ApplicationName: !Ref MyCodeDeployApplication
+      DeploymentGroupName: "MyDeploymentGroup"
+      ServiceRoleArn: !GetAtt PipelineServiceRole.Arn
+      AutoScalingGroups:
+        - "MyAutoScalingGroup"                # Example: Deploy to EC2 ASG
+      DeploymentConfigName: "CodeDeployDefault.OneAtATime"
+      Ec2TagFilters:
+        - Key: "Name"
+          Value: "MyEC2Instance"
+          Type: "KEY_AND_VALUE"
+
+Outputs:
+  PipelineId:
+    Description: "The ID of the created pipeline"
+    Value: !Ref MyPipeline
+```
+---
+
+#### **5. Key Concepts Highlighted in the Template**
+
+1. **Stages**: The pipeline has three stages:
+   - **Source Stage**: Pulls code from a **CodeCommit** repository.
+   - **Build Stage**: Uses **CodeBuild** to build and produce the output artifact.
+   - **Deploy Stage**: Uses **CodeDeploy** to deploy the build artifact to EC2 instances (via **Auto Scaling Group**).
+
+2. **IAM Roles**: 
+   - **PipelineServiceRole**: Grants permissions for CodePipeline to interact with **CodeCommit**, **CodeBuild**, and **CodeDeploy**.
+
+3. **Artifacts**: 
+   - An **S3 bucket** is defined as the artifact store to hold intermediate artifacts between pipeline stages.
+
+4. **Action Configuration**:
+   - **SourceAction**: Fetches the code from **CodeCommit**.
+   - **BuildAction**: Runs the build in **CodeBuild** using a project called `MyCodeBuildProject`.
+   - **DeployAction**: Deploys the output using **CodeDeploy** to a deployment group targeting an Auto Scaling Group.
+
+5. **Cross-Service Integration**:
+   - **CodePipeline** integrates with **
+
+CodeCommit**, **CodeBuild**, and **CodeDeploy**, demonstrating multi-service orchestration in a CI/CD pipeline.
+
+6. **Outputs**: Returns the ID of the created pipeline as an output value for reference or further automation.
+
+---
+
+#### **6. Key Concepts for the Exam**
+- **Stages and Actions**: Understand how to define and configure multiple stages and their respective actions in a pipeline.
+- **Cross-Service Integration**: Know how to integrate **CodeCommit**, **CodeBuild**, **CodeDeploy**, **S3**, and other services.
+- **IAM Role Setup**: Ensure proper IAM permissions are granted to CodePipeline to interact with other services.
+- **Manual Approvals**: Use **approval actions** to introduce manual approval stages.
+- **Artifact Management**: Configure **S3** buckets or **CodeBuild** for managing and storing build artifacts.
+- **Notifications**: Use **SNS** for pipeline success, failure, and approval notifications.
+
+---
+
+This **CodePipeline Cheat Sheet** and example template cover the core concepts required for the **AWS Certified DevOps Engineer – Professional (DOP-C02)** exam.
+
 ### **AWS CloudFormation Cheat Sheet**
 
-### **1. What is AWS CloudFormation?**
+#### **1. What is AWS CloudFormation?**
 - **AWS CloudFormation** automates the creation, update, and management of AWS resources through infrastructure-as-code.
 - You define resources in **JSON** or **YAML** templates.
 
