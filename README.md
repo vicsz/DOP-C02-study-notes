@@ -20,6 +20,7 @@ Study Notes for AWS Certified DevOps Engineer – Professional (DOP-C02)
 - [DevOps on AWS: Best Practices](https://aws.amazon.com/devops/what-is-devops)
 - [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/)
 - [AWS Deployment Pipeline Reference Architecture](https://aws-samples.github.io/aws-deployment-pipeline-reference-architecture/)
+- [AWS Automating safe, hands-off deployments](https://aws.amazon.com/builders-library/automating-safe-hands-off-deployments/)
 
 ## Quick Study Tips for the AWS DevOps Engineer Professional Exam
 
