@@ -9,16 +9,16 @@ Study Notes for AWS Certified DevOps Engineer – Professional (DOP-C02)
 
 ## Core AWS Services 
 
-AWS CodeBuild
-AWS CodeDeploy
-AWS CodePipeline
-AWS CloudFormation
-AWS CloudWatch
-AWS CloudTrail
-AWS IAM
-GuardDuty
-AWS Config
-Amazon Inspector
-AWS Systems Manager
-AWS Trusted Advisor
-AWS Personal Health Dashboard
+### AWS CodeBuild
+### AWS CodeDeploy
+### AWS CodePipeline
+### AWS CloudFormation
+### AWS CloudWatch
+### AWS CloudTrail
+### AWS IAM
+### GuardDuty
+### AWS Config
+### Amazon Inspector
+### AWS Systems Manager
+### AWS Trusted Advisor
+### AWS Personal Health Dashboard
