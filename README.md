@@ -15,7 +15,7 @@ Study Notes for AWS Certified DevOps Engineer – Professional (DOP-C02)
 
 ### White Papers & FAQs
 - [Infrastructure as Code - AWS Whitepaper](https://d1.awsstatic.com/whitepapers/DevOps/infrastructure-as-code.pdf) -- mentioned as a must read for DOP-C02
-- [DevOps on AWS: Best Practices](https://aws.amazon.com/devops/what-is-devops
+- [DevOps on AWS: Best Practices](https://aws.amazon.com/devops/what-is-devops)
 - [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/)
 
 ## Quick Study Tips for the AWS DevOps Engineer Professional Exam
