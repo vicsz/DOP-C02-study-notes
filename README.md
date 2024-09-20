@@ -232,7 +232,7 @@ Here's a **shorter, optimized CodeBuild Study Sheet** in **Markdown** with a con
 
 ---
 
-##### **Sample Buildspec File (`buildspec.yml`)**
+#### **5. Sample Buildspec File (`buildspec.yml`)**
 
 ```yaml
 version: 0.2
@@ -298,11 +298,181 @@ cache:
 
 ---
 
-#### **5. Summary of Key Concepts**
+#### **6. Summary of Key Concepts**
 - **Phases:** Organize your build process into logical steps with **install**, **pre_build**, **build**, **post_build**, and **finally**.
 - **Environment Variables:** Leverage **Secrets Manager** and **Parameter Store** for sensitive data, and use exported variables across phases.
 - **Caching:** Speed up subsequent builds by caching dependencies.
 - **Artifacts & Reports:** Define what gets saved (e.g., build outputs) and generate test reports for visibility.
+
+Here’s a concise **CloudFormation Cheat Sheet** with key concepts and **one sample CloudFormation template** that includes all the essential features for the **AWS Certified DevOps Engineer – Professional (DOP-C02)** exam.
+
+---
+
+### **AWS CloudFormation Cheat Sheet**
+
+### **1. What is AWS CloudFormation?**
+- **AWS CloudFormation** automates the creation, update, and management of AWS resources through infrastructure-as-code.
+- You define resources in **JSON** or **YAML** templates.
+
+#### **2. CloudFormation Key Concepts**
+
+##### **2.1 Parameters**
+- **Parameters** allow you to pass values (like environment, instance type) into the template, making it reusable and configurable.
+  
+##### **2.2 Pseudo Parameters**
+- **Pseudo Parameters** are pre-defined by CloudFormation, and provide contextual information.
+  - **Examples:** `AWS::Region`, `AWS::AccountId`, `AWS::StackName`.
+
+##### **2.3 Conditions**
+- **Conditions** determine whether certain resources or properties are created/assigned based on parameter values or pseudo parameters.
+
+##### **2.4 Intrinsic Functions**
+- **Intrinsic Functions** allow dynamic configuration inside the template:
+  - **Fn::Sub:** String substitution for variables (e.g., `"MyApp-${Environment}"`).
+  - **Fn::Join:** Concatenate values with a delimiter.
+  - **Fn::GetAtt:** Fetch attributes (like ARN or DNS) from resources.
+  - **Fn::If:** Conditional logic inside the template.
+  - **Fn::FindInMap:** Retrieve values from a `Mappings` section.
+
+##### **2.5 Mappings**
+- **Mappings** store key-value pairs used for region-specific values or configuration.
+
+##### **2.6 Outputs**
+- **Outputs** return information after the stack is created (e.g., instance ID, public DNS).
+
+##### **2.7 Deletion Policies**
+- **DeletionPolicy**: Retain or create snapshots of resources before deletion.
+
+---
+
+#### **3. CloudFormation Best Practices**
+- **Use Parameters**: Make templates flexible and reusable.
+- **Use Conditions**: Dynamically create resources based on input or environment.
+- **Use Outputs**: Share information like instance IDs and ARNs across stacks.
+- **Use `Mappings`**: For region or environment-specific configurations.
+- **Stack Policies & Change Sets**: Control updates and safely preview changes.
+
+---
+
+#### **4. Sample CloudFormation Template**
+
+Here’s a single **CloudFormation template** in **YAML** that includes **parameters**, **conditions**, **intrinsic functions**, **pseudo parameters**, **mappings**, **outputs**, and more.
+
+```yaml
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: >
+  CloudFormation template demonstrating key concepts for AWS Certified DevOps Engineer exam.
+
+# Parameters section defines inputs from the user.
+Parameters:
+  Environment:
+    Description: "Specify the environment (prod or dev)"
+    Type: String
+    Default: dev
+    AllowedValues: 
+      - prod
+      - dev
+    ConstraintDescription: "Must be either prod or dev."
+
+  InstanceType:
+    Description: "EC2 instance type"
+    Type: String
+    Default: t2.micro
+    AllowedValues: 
+      - t2.micro
+      - t2.small
+      - t2.medium
+    ConstraintDescription: "Must be a valid EC2 instance type."
+
+# Mappings section for region-specific AMI IDs.
+Mappings:
+  RegionMap:
+    us-east-1:
+      AMI: "ami-0abcdef1234567890"
+    us-west-2:
+      AMI: "ami-0987654321abcdef0"
+
+# Conditions section to create resources based on input values.
+Conditions:
+  IsProdEnvironment: !Equals [!Ref Environment, "prod"]
+
+# Resources section defines the AWS infrastructure.
+Resources:
+  MyEC2Instance:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      InstanceType: !Ref InstanceType           # Referencing the InstanceType parameter
+      ImageId: !FindInMap [RegionMap, !Ref AWS::Region, AMI]  # Lookup AMI based on region
+      SecurityGroupIds: 
+        - !Ref MySecurityGroup                 # Attach the security group
+      Tags:
+        - Key: "Name"
+          Value: !Sub "MyInstance-${Environment}"   # String substitution for dynamic name
+
+  MySecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "Allow SSH access"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0                    # Open port 22 (SSH) to the world
+  
+  ProdEC2Instance:
+    Condition: IsProdEnvironment                # Only create this resource if the environment is "prod"
+    Type: "AWS::EC2::Instance"
+    Properties:
+      InstanceType: !Ref InstanceType
+      ImageId: !FindInMap [RegionMap, !Ref AWS::Region, AMI]
+      SecurityGroupIds: 
+        - !Ref MySecurityGroup
+
+# Outputs section returns useful information like the instance ID and public DNS.
+Outputs:
+  EC2InstanceID:
+    Description: "ID of the created EC2 instance"
+    Value: !Ref MyEC2Instance
+  InstancePublicDNS:
+    Description: "Public DNS of the EC2 instance"
+    Value: !GetAtt MyEC2Instance.PublicDnsName
+```
+
+---
+
+#### **5. Key Concepts Highlighted in the Template**
+
+1. **Parameters:**
+   - `Environment` (with `prod` and `dev` options) and `InstanceType` for user input.
+
+2. **Mappings:**
+   - `RegionMap` for region-specific AMIs (e.g., different AMIs for `us-east-1` and `us-west-2`).
+
+3. **Conditions:**
+   - `IsProdEnvironment` condition ensures that certain resources (like `ProdEC2Instance`) are only created in the production environment.
+
+4. **Intrinsic Functions:**
+   - `!Ref` references parameter values (e.g., `InstanceType`).
+   - `!FindInMap` retrieves region-specific values from the `RegionMap`.
+   - `!Sub` performs string substitution (e.g., dynamic naming for EC2 instances).
+   - `!GetAtt` retrieves the **Public DNS** of the EC2 instance.
+
+5. **Outputs:**
+   - **Instance ID** and **Public DNS** are returned as outputs.
+
+6. **Conditions with Resources:**
+   - `ProdEC2Instance` is created only when the `Environment` is `prod`, showing how to use conditions to manage infrastructure per environment.
+
+---
+
+#### **6. Key Concepts for the Exam**
+- **Intrinsic Functions**: Learn how to use `!Ref`, `!GetAtt`, `!Sub`, `!FindInMap`, and conditionals like `!If`.
+- **Parameters**: Make templates flexible with user input for instance types, environment, etc.
+- **Conditions**: Dynamically create resources based on environment (e.g., `prod`, `dev`).
+- **Mappings**: Static region-specific or environment-specific configuration (e.g., AMIs).
+- **Outputs**: Return useful information like instance IDs, public DNS, or ARNs.
+- **Pseudo Parameters**: Use built-in values like `AWS::Region`, `AWS::AccountId`, and `AWS::StackName`.
 
 
 ## Tables
