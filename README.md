@@ -23,32 +23,147 @@ Study Notes for AWS Certified DevOps Engineer – Professional (DOP-C02)
 - [AWS Automating safe, hands-off deployments](https://aws.amazon.com/builders-library/automating-safe-hands-off-deployments/)
 - [AWS CodeBuild build spec reference](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html)
 
-## Quick Study Tips for the AWS DevOps Engineer Professional Exam
+## Quick Study Tips ( Overview) 
 
-### Core AWS DevOps Services
-Focus on understanding the **core DevOps services**, such as:
-- **AWS CodeCommit**: Managed Git repository for source control.
-- **AWS CodeBuild**: Fully managed build service for compiling source code, running tests, and producing software packages.
-- **AWS CodePipeline**: Orchestration tool for automating the release pipelines.
-- **AWS CodeDeploy**: Service for automating code deployments to EC2, Lambda, or on-premises servers.
-- **AWS CloudFormation**: Infrastructure as Code (IaC) tool for provisioning resources.
-- **AWS OpsWorks**: Configuration management service using Chef or Puppet.
+### Domain 1: SDLC Automation (22%)
 
-### Key Concepts to Master
-- **Continuous Integration and Continuous Deployment (CI/CD)**: Deep understanding of setting up CI/CD pipelines on AWS.
-- **Infrastructure as Code (IaC)**: Master CloudFormation templates, AWS CDK, and how they can be used to deploy infrastructure.
-- **Monitoring and Logging**: Know how to use **Amazon CloudWatch**, **AWS X-Ray**, **AWS CloudTrail**, and **AWS Config** for monitoring, tracing, and compliance.
-- **Automation and Optimization**: Leverage **AWS Systems Manager**, **Auto Scaling**, and **Elastic Beanstalk** for automating tasks and resource scaling.
-- **Security and Compliance**: AWS IAM roles, KMS, Secrets Manager, and GuardDuty are essential for ensuring compliance and secure environments.
+#### Core AWS DevOps Services
+- **AWS CodePipeline**: Automates the end-to-end release process.
+- **AWS CodeBuild**: Compiles source code, runs tests, and produces software packages.
+- **AWS CodeCommit**: Managed Git service for version control.
+- **AWS CodeDeploy**: Automates deployments to Amazon EC2, Lambda, and on-premises servers.
+- **AWS Secrets Manager / AWS SSM Parameter Store**: Manages secrets and configuration data in CI/CD pipelines.
 
-## Additional AWS DevOps Services
+#### Key Concepts to Master
+- **Continuous Integration and Continuous Deployment (CI/CD)**:
+  - Automate pipelines to integrate builds, tests, and deployments.
+  - Learn to set up and manage complex CI/CD workflows across environments and accounts.
+  
+- **Automated Testing**:
+  - Integrate unit, integration, and security tests in CI/CD.
+  - Automate testing phases in pipelines using tools like CodeBuild.
+  
+- **Artifact Management**:
+  - Create and manage artifact repositories (AWS CodeArtifact, ECR).
+  - Automate artifact storage and distribution (Amazon S3, EC2 Image Builder).
+  
+- **Deployment Strategies**:
+  - Understand deployment methods like blue/green, canary, and rolling updates.
+  - Implement these strategies for EC2, Lambda, and container-based deployments (ECS, EKS).
 
-- **Elastic Beanstalk**: Simplified service for deploying and managing applications. Understand how to use it for automating application deployments.
-- **AWS Lambda**: Serverless computing service, useful for automating infrastructure tasks, processing logs, and event-driven architecture.
-- **AWS Step Functions**: Orchestrate workflows by coordinating multiple AWS services into serverless workflows.
-- **Amazon EventBridge**: Serverless event bus that allows you to route events between AWS services or SaaS applications.
-- **Amazon SQS**: Fully managed queuing service for decoupling microservices and ensuring reliable message delivery.
-- **Amazon SNS**: Pub-sub messaging service for sending notifications
+---
+
+### Domain 2: Configuration Management and Infrastructure as Code (17%)
+
+#### Core AWS DevOps Services
+- **AWS CloudFormation**: Primary IaC tool for defining and managing AWS infrastructure.
+- **AWS CDK**: High-level framework for defining AWS infrastructure with code.
+- **AWS Systems Manager**: Centralized management service for patching and configuration.
+- **AWS OpsWorks**: Configuration management using Chef or Puppet.
+
+#### Key Concepts to Master
+- **Infrastructure as Code (IaC)**:
+  - Learn to write and manage CloudFormation templates and AWS CDK.
+  - Deploy reusable infrastructure components with AWS Service Catalog.
+  
+- **Configuration Management**:
+  - Automate patching, configuration, and compliance using AWS Systems Manager and AWS OpsWorks.
+  
+- **Multi-Account Setup**:
+  - Master account management services like AWS Organizations and Control Tower.
+  - Implement governance controls using Service Control Policies (SCPs) and AWS Config Rules.
+
+---
+
+### Domain 3: Resilient Cloud Solutions (15%)
+
+#### Core AWS DevOps Services
+- **Amazon Route 53**: Highly available and scalable DNS web service.
+- **Amazon RDS / Aurora**: Multi-AZ database deployments for high availability.
+- **Amazon CloudFront**: Global content delivery with automatic failover.
+- **Elastic Load Balancing (ELB)**: Load balancing across multiple AZs and Regions.
+
+#### Key Concepts to Master
+- **High Availability**:
+  - Design multi-AZ and multi-Region architectures for EC2, RDS, DynamoDB, and S3.
+  - Understand load balancing and failover techniques.
+  
+- **Scalability**:
+  - Implement auto-scaling for EC2, ECS, and RDS based on CloudWatch metrics.
+  - Design distributed, loosely coupled architectures.
+  
+- **Disaster Recovery**:
+  - Define RTO and RPO requirements.
+  - Master backup and recovery techniques (AWS Backup, cross-Region replication).
+
+---
+
+### Domain 4: Monitoring and Logging (15%)
+
+#### Core AWS DevOps Services
+- **Amazon CloudWatch**: Metrics and logs monitoring for AWS resources.
+- **AWS X-Ray**: Distributed tracing for microservices and serverless applications.
+- **AWS CloudTrail**: Tracks API calls and account activity for audit purposes.
+- **AWS Config**: Tracks AWS resource configuration changes.
+
+#### Key Concepts to Master
+- **Log Aggregation**:
+  - Collect, aggregate, and store logs using CloudWatch Logs, Kinesis Data Firehose, and Amazon S3.
+  - Implement log retention and lifecycle policies for log data.
+  
+- **Real-Time Monitoring**:
+  - Create CloudWatch metrics, alarms, and dashboards for proactive monitoring.
+  - Set up anomaly detection using CloudWatch alarms and custom metrics.
+  
+- **Event-Driven Monitoring**:
+  - Configure EventBridge for event-driven architectures and alert notifications.
+  - Integrate auto-scaling events with CloudWatch and SNS for dynamic scaling.
+
+---
+
+### Domain 5: Incident and Event Response (14%)
+
+#### Core AWS DevOps Services
+- **Amazon EventBridge**: Event-driven architecture for capturing and processing events.
+- **AWS Health Dashboard**: Monitors AWS service health and notifies of incidents.
+- **Amazon SNS**: Notifies teams about critical events and incidents.
+- **Amazon SQS**: Message queuing for decoupling systems and handling event workflows.
+
+#### Key Concepts to Master
+- **Event-Driven Response**:
+  - Capture and process AWS events using EventBridge, CloudWatch, and Lambda.
+  - Build automation workflows for incident response using Step Functions and SNS.
+  
+- **Incident Management**:
+  - Monitor system health using AWS Health and CloudWatch metrics.
+  - Implement auto-remediation for common incidents using AWS Systems Manager and Lambda.
+
+- **Root Cause Analysis**:
+  - Use CloudWatch and X-Ray for debugging application failures.
+  - Perform post-incident analysis to identify and fix root causes in CI/CD pipelines or auto-scaling configurations.
+
+---
+
+### Domain 6: Security and Compliance (17%)
+
+#### Core AWS DevOps Services
+- **AWS Identity and Access Management (IAM)**: Centralized control for user permissions and access.
+- **AWS Secrets Manager**: Securely manage and rotate secrets.
+- **AWS Key Management Service (KMS)**: Encryption and key management service for securing data.
+- **Amazon GuardDuty**: Threat detection and continuous security monitoring.
+
+#### Key Concepts to Master
+- **Identity and Access Management (IAM)**:
+  - Implement fine-grained access control using IAM roles, policies, and permission boundaries.
+  - Master identity federation and multi-factor authentication (MFA) for secure access.
+  
+- **Security Automation**:
+  - Automate security best practices using AWS Config, AWS Security Hub, and AWS Systems Manager.
+  - Apply encryption and data protection using KMS, ACM, and AWS WAF.
+  
+- **Compliance and Auditing**:
+  - Enable auditing and monitoring with CloudTrail, Config, and GuardDuty.
+  - Ensure compliance by continuously monitoring configurations using AWS Config rules and CloudFormation drift detection.
 
 ## Services In-Depth 
 ### **AWS CodeDeploy Study Sheet**
