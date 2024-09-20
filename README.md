@@ -1035,9 +1035,7 @@ Proactive monitoring and alerting help maintain HA and FT, and improve recovery 
 
 | **Category**                     | **AWS Service**                                                                 |
 |---------------------------------- |---------------------------------------------------------------------------------|
-| **High Availability**             | **Elastic Load Balancer (ELB)**, **RDS Multi-AZ
-
-**, **Auto Scaling**, **S3 CRR**  |
+| **High Availability**             | **Elastic Load Balancer (ELB)**, **RDS Multi-AZ**, **Auto Scaling**, **S3 CRR**  |
 | **Fault Tolerance**               | **Route 53 Failover**, **DynamoDB Global Tables**, **Auto Scaling**              |
 | **Disaster Recovery**             | **AWS Backup**, **RDS Read Replicas**, **Elastic Disaster Recovery (DRS)**       |
 | **Monitoring & Alerts**           | **CloudWatch**, **Route 53 Health Checks**, **CloudTrail**, **Personal Health Dashboard** |
