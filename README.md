@@ -24,6 +24,73 @@ Study Notes for AWS Certified DevOps Engineer – Professional (DOP-C02)
 - [AWS CodeBuild build spec reference](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html)
 - [Running Containerized Microservices on AWS](https://d1.awsstatic.com/whitepapers/DevOps/running-containerized-microservices-on-aws.pdf)
 
+## General CI/CD and DevOps Best Practices (AWS)
+
+Building a solid CI/CD pipeline is essential for DevOps success, ensuring fast, reliable, and scalable delivery of software across various environments. AWS provides key insights and practices to ensure the effective implementation of these processes. Below are the summarized best practices and guidelines:
+
+### Starting with a Minimum Viable Pipeline (MVP)
+- Begin your continuous delivery journey with a **minimum viable pipeline**.
+  - Implement basic processes first, such as code style checks or a single unit test without deployment.
+  - A minimal pipeline helps teams get started with continuous integration while ensuring fast feedback during early stages.
+  - For example, in the commit stage, a **lightweight build** process ensures that code pushes and basic tests are handled efficiently without delays.
+
+### Pipeline Best Practices
+- **Consistency**:
+  - **Build and package artifacts once**: The source code should be built and packaged a single time, producing a consistent artifact.
+  - Store the artifact in a **registry** with appropriate metadata, ready for deployment to any environment.
+  - The output of the pipeline should be **versioned**, traceable back to the source code, and linked to business requirements.
+  - Promotion of the artifact through environments should be **automated** without rebuilding.
+
+- **Small Batches**:
+  - Encourage **small, frequent releases** by minimizing manual processes.
+  - Automate processes for testing and deployment to eliminate toil and ensure fast feedback loops.
+  - Discourage long-lived feature branches in favor of **trunk-based development** where developers merge and deploy their changes daily through the pipeline.
+  
+- **Measured Approach**:
+  - Provide **real-time metrics** to track key areas:
+    - **Code quality** (e.g., via static analysis tools).
+    - **Speed** (e.g., deployment frequency, lead time for changes).
+    - **Security** (e.g., percentage of security controls automated, mean time to resolve security errors).
+    - **Reliability** (e.g., deployment failure rate, mean time to restore service after incidents).
+  - Use a **real-time dashboard** to view these metrics, helping teams identify bottlenecks and optimize processes.
+  - When real-time instrumentation isn't feasible, use surveys or questionnaires to estimate these metrics.
+  
+### Key Metrics to Track (i.e. don't purge the history)
+- **Number of builds**: Track how often builds are triggered and executed.
+- **Number of deployments**: Monitor how frequently code changes reach production.
+- **Average time for changes to reach production**: Identify delays between code commits and their deployment.
+- **Average build time**: Ensure that builds are fast and reliable to enable quicker feedback.
+- **Changes reaching production**: Track the success rate of changes going live without failures.
+- **Pipeline stage time**: Measure the time it takes for changes to progress through each stage of the pipeline.
+
+### Minimizing Bottlenecks and Inefficiencies
+- Avoid long-lived branches with large, complicated merges. Use **short-lived feature branches** or **trunk-based development**.
+- Eliminate or reduce **manual tests**, replacing them with automated testing frameworks.
+- Reduce manual approval processes and gates; instead, implement automated gates and approvals based on test results and metrics.
+- **Automate code reviews** and **security reviews** where possible to eliminate human error and delays.
+
+### Pipeline Structure and Evolution
+- **Pipeline Expectations**: A well-structured pipeline could follow a model similar to [AWS Deployment Pipeline Reference Architecture](https://aws-samples.github.io/aws-deployment-pipeline-reference-architecture/application-pipeline/).
+  
+- **Evolutionary Design**:
+  - Acknowledge that **requirements change** over time. Avoid locking in detailed designs upfront, as evolving systems require flexibility.
+  - Adopt a design philosophy that allows pipelines to evolve alongside the project.
+
+### Decentralized Governance
+- In large organizations, different teams have different use cases and may require different tools to solve unique challenges.
+  - Encourage teams to use the **best tools for their specific problem** (e.g., different databases or programming languages).
+  - However, maintain consistency by using **standardized build and code review processes** across the organization, ensuring that all teams can function together effectively.
+  - **Decentralized governance with central standards** ensures flexibility without sacrificing alignment across teams.
+
+### Sources:
+
+- [Practicing Continuous Integration and Continuous Delivery on AWS](https://docs.aws.amazon.com/pdfs/whitepapers/latest/practicing-continuous-integration-continuous-delivery/practicing-continuous-integration-continuous-delivery.pdf)
+- [Running Containerized Microservices on AWS](https://d1.awsstatic.com/whitepapers/DevOps/running-containerized-microservices-on-aws.pdf)
+- [What is DevOps? AWS DevOps Page](https://aws.amazon.com/devops/what-is-devops/)
+- [AWS Deployment Pipeline Reference Architecture](https://aws-samples.github.io/aws-deployment-pipeline-reference-architecture/application-pipeline/)
+
+---
+
 ## Quick Study Tips ( Overview) 
 
 ### Domain 1: SDLC Automation (22%) - Summary 
