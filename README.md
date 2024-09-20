@@ -19,7 +19,7 @@ Study Notes for AWS Certified DevOps Engineer – Professional (DOP-C02)
 - [Practicing CI/CD on AWS](https://docs.aws.amazon.com/pdfs/whitepapers/latest/practicing-continuous-integration-continuous-delivery/practicing-continuous-integration-continuous-delivery.pdf) -- solid CI/CD fundamentals overview
 - [DevOps on AWS: Best Practices](https://aws.amazon.com/devops/what-is-devops)
 - [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/)
-- [AWS Deployment Pipeline Reference Architecture](https://aws-samples.github.io/aws-deployment-pipeline-reference-architecture/)
+- [AWS Deployment Pipeline Reference Architecture](https://aws-samples.github.io/aws-deployment-pipeline-reference-architecture/) -- good tips / best practices on geenral CI/CD pipeline design
 - [AWS Automating safe, hands-off deployments](https://aws.amazon.com/builders-library/automating-safe-hands-off-deployments/)
 
 ## Quick Study Tips for the AWS DevOps Engineer Professional Exam
