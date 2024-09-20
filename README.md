@@ -308,7 +308,7 @@ Here’s a **CodePipeline Cheat Sheet** with key concepts relevant for the **AWS
 
 ---
 
-### **AWS CodePipeline Cheat Sheet**
+### **AWS CodePipeline Study Sheet**
 
 #### **1. What is AWS CodePipeline?**
 - **AWS CodePipeline** is a fully managed continuous integration and continuous delivery (CI/CD) service.
@@ -373,7 +373,7 @@ Here’s a **CodePipeline Cheat Sheet** with key concepts relevant for the **AWS
 
 ---
 
-#### **4. Example CodePipeline YAML Template**
+#### **4. Example CodePipeline YAML Example**
 
 This template sets up a **basic CI/CD pipeline** with **CodeCommit** as the source, **CodeBuild** for the build process, and **CodeDeploy** to deploy the application.
 
@@ -516,7 +516,7 @@ Outputs:
 ```
 ---
 
-#### **5. Key Concepts Highlighted in the Template**
+#### **5. Key Concepts Highlighted in the Example**
 
 1. **Stages**: The pipeline has three stages:
    - **Source Stage**: Pulls code from a **CodeCommit** repository.
@@ -553,9 +553,7 @@ CodeCommit**, **CodeBuild**, and **CodeDeploy**, demonstrating multi-service orc
 
 ---
 
-This **CodePipeline Cheat Sheet** and example template cover the core concepts required for the **AWS Certified DevOps Engineer – Professional (DOP-C02)** exam.
-
-### **AWS CloudFormation Cheat Sheet**
+### **AWS CloudFormation Study Sheet**
 
 #### **1. What is AWS CloudFormation?**
 - **AWS CloudFormation** automates the creation, update, and management of AWS resources through infrastructure-as-code.
