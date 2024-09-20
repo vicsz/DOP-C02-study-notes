@@ -25,7 +25,7 @@ Study Notes for AWS Certified DevOps Engineer – Professional (DOP-C02)
 
 ## Quick Study Tips ( Overview) 
 
-### Domain 1: SDLC Automation (22%)
+### Domain 1: SDLC Automation (22%) - Summary 
 
 #### Core AWS DevOps Services
 - **AWS CodePipeline**: Automates the end-to-end release process.
@@ -53,7 +53,7 @@ Study Notes for AWS Certified DevOps Engineer – Professional (DOP-C02)
 
 ---
 
-### Domain 2: Configuration Management and Infrastructure as Code (17%)
+### Domain 2: Configuration Management and Infrastructure as Code (17%) - Summary
 
 #### Core AWS DevOps Services
 - **AWS CloudFormation**: Primary IaC tool for defining and managing AWS infrastructure.
@@ -75,7 +75,7 @@ Study Notes for AWS Certified DevOps Engineer – Professional (DOP-C02)
 
 ---
 
-### Domain 3: Resilient Cloud Solutions (15%)
+### Domain 3: Resilient Cloud Solutions (15%) - Summary
 
 #### Core AWS DevOps Services
 - **Amazon Route 53**: Highly available and scalable DNS web service.
@@ -98,7 +98,7 @@ Study Notes for AWS Certified DevOps Engineer – Professional (DOP-C02)
 
 ---
 
-### Domain 4: Monitoring and Logging (15%)
+### Domain 4: Monitoring and Logging (15%) - Summary
 
 #### Core AWS DevOps Services
 - **Amazon CloudWatch**: Metrics and logs monitoring for AWS resources.
@@ -121,7 +121,7 @@ Study Notes for AWS Certified DevOps Engineer – Professional (DOP-C02)
 
 ---
 
-### Domain 5: Incident and Event Response (14%)
+### Domain 5: Incident and Event Response (14%) - Summary
 
 #### Core AWS DevOps Services
 - **Amazon EventBridge**: Event-driven architecture for capturing and processing events.
@@ -144,7 +144,7 @@ Study Notes for AWS Certified DevOps Engineer – Professional (DOP-C02)
 
 ---
 
-### Domain 6: Security and Compliance (17%)
+### Domain 6: Security and Compliance (17%) - Summary
 
 #### Core AWS DevOps Services
 - **AWS Identity and Access Management (IAM)**: Centralized control for user permissions and access.
