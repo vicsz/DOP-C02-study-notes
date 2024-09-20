@@ -719,6 +719,152 @@ Outputs:
 - **Outputs**: Return useful information like instance IDs, public DNS, or ARNs.
 - **Pseudo Parameters**: Use built-in values like `AWS::Region`, `AWS::AccountId`, and `AWS::StackName`.
 
+## **High Availability, Fault Tolerance, and Disaster Recovery - Study Sheet**
+
+### **1. High Availability (HA)**
+
+**High Availability** ensures that your system is always accessible, minimizing downtime by distributing resources across multiple failure domains (like Availability Zones).
+
+#### **Key Concepts:**
+- **Availability Zones (AZs)**: Independent data centers within an AWS region. Spreading workloads across multiple AZs improves HA.
+- **Multi-AZ Deployments**: Resources are deployed across multiple AZs to ensure availability in case one AZ goes down.
+- **Elasticity & Scalability**: **Auto Scaling** helps to automatically adjust the number of resources (EC2 instances, for example) based on demand, ensuring that your system can handle varying traffic loads.
+
+#### **Best Practices:**
+- Use **Elastic Load Balancing (ELB)** to distribute incoming traffic across multiple instances.
+- Deploy **RDS** in Multi-AZ mode to automatically fail over to a standby replica in case of failure.
+- Use **Amazon S3** with versioning and cross-region replication (CRR) to improve availability and data durability.
+- Ensure **Stateless Services** where possible, so that instances can be replaced easily without affecting application state.
+
+#### **AWS Services for High Availability:**
+- **Elastic Load Balancer (ELB)**: Distributes incoming traffic across multiple instances.
+- **Amazon Route 53**: Provides DNS-based routing and health checks to route traffic to healthy resources.
+- **Amazon RDS (Multi-AZ)**: Ensures a standby database instance in another AZ for failover.
+- **Auto Scaling**: Dynamically adjusts resources to meet changing demand.
+
+---
+
+### **2. Fault Tolerance (FT)**
+
+**Fault Tolerance** is the ability of a system to continue functioning even if some components fail. In AWS, fault tolerance is achieved by building systems with redundancy at every layer.
+
+#### **Key Concepts:**
+- **Redundancy**: Ensure that resources (instances, databases, etc.) have backup instances to automatically take over if a failure occurs.
+- **Failover Mechanisms**: Automatic redirection of traffic to standby resources (via Route 53, Auto Scaling, etc.) when a failure occurs.
+- **Stateful Services**: Requires careful planning to ensure state replication or synchronization (e.g., using **Amazon DynamoDB** or **ElastiCache** with replication).
+
+#### **Best Practices:**
+- Use **Multi-AZ** setups across critical resources such as databases, application servers, and storage.
+- Implement **Auto Healing** with Auto Scaling or Elastic Beanstalk to replace failed instances automatically.
+- Use **DynamoDB Global Tables** to replicate data across regions, providing both availability and fault tolerance.
+- Ensure that your **VPC** is designed with redundancy, with NAT gateways or instances in multiple AZs.
+
+#### **AWS Services for Fault Tolerance:**
+- **Amazon EC2 Auto Scaling**: Automatically replaces unhealthy instances.
+- **Amazon RDS Multi-AZ**: Provides failover capability for your database.
+- **Route 53 Failover Routing**: Directs traffic to healthy endpoints based on health checks.
+- **Amazon DynamoDB Global Tables**: Ensures fault tolerance across multiple regions with global data replication.
+
+---
+
+### **3. Disaster Recovery (DR)**
+
+**Disaster Recovery (DR)** focuses on how quickly and efficiently a system can recover from a significant failure or disaster, such as a regional outage. It aims to minimize **RPO (Recovery Point Objective)** and **RTO (Recovery Time Objective)**.
+
+#### **Key Concepts:**
+- **RPO (Recovery Point Objective)**: The acceptable amount of data loss in time (how much data you are willing to lose).
+- **RTO (Recovery Time Objective)**: The acceptable downtime (how quickly systems must recover after failure).
+- **DR Tiers**: AWS supports different DR strategies based on business requirements, ranging from **Backup and Restore** to **Hot Standby** (multi-site).
+
+#### **Disaster Recovery Strategies:**
+
+| **DR Strategy**        | **Description**                                                                                           | **RPO**          | **RTO**           |
+|------------------------|-----------------------------------------------------------------------------------------------------------|------------------|-------------------|
+| **Backup & Restore**    | Regular backups are taken and stored in a different location. System is rebuilt and data is restored.      | High             | High              |
+| **Pilot Light**         | Critical infrastructure runs in a second region at minimal capacity. In a disaster, systems are scaled up. | Moderate         | Moderate          |
+| **Warm Standby**        | A scaled-down version of the production environment running in another region, ready to scale up.          | Low              | Moderate to Low   |
+| **Hot Standby (Multi-Site)** | A fully operational duplicate environment running in a different region. Traffic is routed instantly.     | Very Low         | Very Low          |
+
+#### **Best Practices:**
+- Implement **Cross-Region Replication (CRR)** for S3, DynamoDB, RDS, and other data stores.
+- Use **AWS Backup** to automate backups for key AWS services like EC2, RDS, DynamoDB, EFS, etc.
+- Use **CloudFormation** or **Terraform** to automate environment rebuilding, reducing RTO.
+- Configure **Route 53 Failover Routing** to switch traffic to backup resources in case of primary resource failure.
+
+#### **AWS Services for Disaster Recovery:**
+- **AWS Backup**: Centralized backup for AWS services like EC2, RDS, DynamoDB, and EFS.
+- **Amazon S3 Cross-Region Replication**: Ensures data is replicated to another AWS region.
+- **AWS Elastic Disaster Recovery (DRS)**: Helps replicate on-premises or cloud resources to AWS, making recovery easier and faster.
+- **Amazon RDS Read Replicas**: Can be promoted to a master instance in another region in case of a regional failure.
+
+---
+
+### **4. Multi-Region Architectures**
+
+**Multi-region architectures** help in improving both **availability** and **fault tolerance** by spreading resources across multiple AWS regions.
+
+#### **Key Concepts:**
+- **Active-Active**: Resources are actively serving traffic in multiple regions. Traffic is distributed via **Route 53**.
+- **Active-Passive**: Only one region is actively serving traffic, while the other regions act as failover.
+- **Data Replication**: Use **Amazon DynamoDB Global Tables**, **Amazon RDS** with cross-region replication, and **Amazon S3 CRR** to replicate data across regions.
+
+#### **Best Practices:**
+- **Use Route 53** for global load balancing and failover across multiple regions.
+- **DynamoDB Global Tables** for multi-region, globally distributed databases.
+- **Cross-Region VPC Peering** for network connectivity between regions.
+- **Read Replicas** for databases like **RDS** to ensure low-latency reads across regions.
+
+#### **AWS Services for Multi-Region Architectures:**
+- **Amazon Route 53**: Provides DNS-based global traffic routing and failover.
+- **Amazon DynamoDB Global Tables**: Enable multi-region, globally distributed data stores.
+- **Amazon RDS Cross-Region Read Replicas**: Create read replicas in other AWS regions for disaster recovery and read scaling.
+- **S3 Cross-Region Replication (CRR)**: Automatically replicates data to another region for durability and disaster recovery.
+
+---
+
+### **5. Monitoring and Alerts**
+
+Proactive monitoring and alerting help maintain HA and FT, and improve recovery in the event of failure or disaster.
+
+#### **Key Concepts:**
+- **Health Checks**: AWS offers health checks via **Route 53**, **ELB**, and **Auto Scaling** to ensure resources are functioning correctly.
+- **CloudWatch Alarms**: Set up **CloudWatch** alarms to monitor the health of resources and alert on anomalies.
+- **Event-Driven Actions**: Use **CloudWatch Events** and **AWS Lambda** to automate recovery actions based on events or failures.
+
+#### **Best Practices:**
+- Use **Route 53 Health Checks** to detect unhealthy resources and automatically reroute traffic.
+- Configure **CloudWatch Logs** and **CloudWatch Alarms** to monitor performance and trigger actions (like scaling, failover, etc.).
+- Use **AWS Personal Health Dashboard** to get personalized alerts and status updates on service availability and health.
+
+#### **AWS Services for Monitoring and Alerts:**
+- **Amazon CloudWatch**: For logs, metrics, alarms, and dashboarding.
+- **AWS CloudTrail**: Logs API calls and events across AWS accounts.
+- **Route 53 Health Checks**: Monitors the health of your endpoints to ensure only healthy resources receive traffic.
+
+---
+
+### **6. Summary: Key Metrics for HA, FT, and DR**
+
+- **RPO (Recovery Point Objective)**: Measures how much data loss can be tolerated during a disaster.
+- **RTO (Recovery Time Objective)**: Measures the time it takes to restore services after a failure.
+- **MTTF (Mean Time to Failure)**: The average time before a system component is expected to fail.
+- **MTTR (Mean Time to Repair)**: The average time to recover after a failure occurs.
+- **SLA (Service Level Agreement)**: The agreed-upon uptime and availability for a service.
+
+---
+
+### **7. Key AWS Services for HA, FT, and DR**
+
+| **Category**                     | **AWS Service**                                                                 |
+|---------------------------------- |---------------------------------------------------------------------------------|
+| **High Availability**             | **Elastic Load Balancer (ELB)**, **RDS Multi-AZ
+
+**, **Auto Scaling**, **S3 CRR**  |
+| **Fault Tolerance**               | **Route 53 Failover**, **DynamoDB Global Tables**, **Auto Scaling**              |
+| **Disaster Recovery**             | **AWS Backup**, **RDS Read Replicas**, **Elastic Disaster Recovery (DRS)**       |
+| **Monitoring & Alerts**           | **CloudWatch**, **Route 53 Health Checks**, **CloudTrail**, **Personal Health Dashboard** |
+
+---
 
 ## Tables
 
@@ -731,16 +877,6 @@ Outputs:
 | **Immutable Deployment**| New instances are created with the new version of the application, and old instances are terminated after traffic is routed to the new ones. | Reduces risk of configuration drift, ensures consistency.      | Requires more infrastructure, higher cost.                      | Highly critical applications needing consistent environments.     | CodeDeploy (immutable), Auto Scaling, Elastic Beanstalk            |
 | **Traffic Splitting**   | Diverts a small percentage of traffic to the new version before full rollout.    | Minimizes risk, allows testing with live traffic.              | Complex to implement and monitor, needs good rollback mechanisms. | Testing new features with minimal impact, A/B testing.            | AWS App Mesh, Lambda Traffic Shifting, API Gateway, CodeDeploy     |
 | **Blue/Green Deployment**| Two separate environments (Blue and Green) are maintained. Traffic is switched to the new environment (Green) when ready. | Zero downtime, easy rollback.                                 | High infrastructure cost, complex environment management.       | Mission-critical systems needing zero downtime during deployment. | Elastic Beanstalk, CodeDeploy, Route 53, ELB, Auto Scaling         |
-
-### Disaster Recovery (DR) Strategies
-
-| **Strategy**           | **Description**                                                                 | **Advantages**                                                 | **Challenges**                                                 | **RPO (Recovery Point Objective)** | **RTO (Recovery Time Objective)** | **AWS Services** (related)                                          |
-|------------------------|---------------------------------------------------------------------------------|---------------------------------------------------------------|-----------------------------------------------------------------|------------------------------------|------------------------------------|--------------------------------------------------------------------|
-| **Pilot Light**         | Core services run at minimal capacity in a second region, ready to scale in case of a disaster. | Lower cost than full replication, faster recovery than cold standby. | Must scale up during a disaster, still some downtime.           | Moderate                            | Moderate                            | EC2, RDS (Read Replica), Elastic Load Balancing, Auto Scaling         |
-| **Warm Standby**        | A scaled-down version of a fully functional environment is always running, ready to scale up when needed. | Faster recovery than Pilot Light, relatively low cost.          | Requires more resources than Pilot Light, but still some downtime. | Moderate                            | Faster than Pilot Light              | EC2, RDS, Auto Scaling, Elastic Load Balancing                        |
-| **Cold Standby**        | Backup is stored, but no active resources are running. The environment is spun up only after a disaster occurs. | Lowest cost.                                                   | Long recovery time, high risk of data loss.                      | High                                | High                                | S3, Glacier, EC2, CloudFormation                                      |
-| **Hot Standby (Multi-Site)** | Full-scale version of your application is always running in another region, ready to take over instantly. | Near-instant failover, minimal downtime.                        | Highest cost, complex to maintain.                               | Very Low                            | Very Low                            | Route 53 (failover), EC2, RDS (multi-AZ), Elastic Load Balancing, Auto Scaling |
-| **Backup and Restore**  | Data is regularly backed up to a remote location, and infrastructure is spun up from scratch in the event of failure. | Simple and cost-effective.                                     | Slow recovery time, risk of data loss since backups may be infrequent. | High                                | High                                | S3, Glacier, CloudFormation, AWS Backup                               |
 
 
 ## Notes 
