@@ -9,7 +9,8 @@ Study Notes for AWS Certified DevOps Engineer – Professional (DOP-C02)
 ### Study Guides / Notes
 - [Toward the Cloud - Study Guide](https://towardsthecloud.com/aws-devops-engineer-professional-exam-guide) -- more indepth DOP-C02 overview (compared official guide)
 - [Tutorials Dojo DOP-C02 Study Materials](https://tutorialsdojo.com/aws-certified-devops-engineer-professional/) -- useful overview with sample questions and scenarios
-- [AWS Devops Engineer Professional](https://certification.kananinirav.com/aws-devops-engineer/) -- including really good summary on [CloudFormation](https://certification.kananinirav.com/aws-devops-engineer/2-infrastructure-as-code/cloudformation.html) -- very through study notes in general -- albeit for v1 of Exam (not v2) 
+- [AWS Devops Engineer Professional](https://certification.kananinirav.com/aws-devops-engineer/) -- including really good summary on [CloudFormation](https://certification.kananinirav.com/aws-devops-engineer/2-infrastructure-as-code/cloudformation.html) -- very through study notes in general -- albeit for v1 of Exam (not v2)
+- [Adrian Cantrill Study Guide]https://learn.cantrill.io/p/aws-certified-devops-engineer-professional -- paid guide / excellent 
 
 ### Sample Questions
 - [AWS Certified DevOps Engineer Professional Sample Questions](https://d1.awsstatic.com/training-and-certification/docs-devops-pro/AWS-Certified-DevOps-Engineer-Professional_Sample-Questions.pdf)
